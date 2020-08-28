@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Init")]
+    [SerializeField] private GameObject activeModel = default;
+
     private PlayerMovement playerStateManager = default;
     private PlayerInteraction playerInteraction = default;
     private float vertical = 0f;
@@ -14,10 +17,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerStateManager = GetComponent<PlayerMovement>();
-        playerStateManager.Init();
+        playerStateManager.Init(activeModel);
 
         playerInteraction = GetComponent<PlayerInteraction>();
-        playerInteraction.Init();
+        playerInteraction.Init(activeModel);
     }
 
     private void Update()
@@ -47,5 +50,4 @@ public class PlayerController : MonoBehaviour
         interactInput = Input.GetButtonDown("Interact");
         dropInput = Input.GetButtonDown("Drop");
     }
-
 }

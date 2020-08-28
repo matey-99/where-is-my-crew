@@ -9,12 +9,15 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private LayerMask interactableLayer = default;
     [SerializeField] private float interactableRadarRadius = 3f;
 
+    private Animator anim = default;
     private GameObject heldObject = default;
     private Ship ship = default;
 
-    public void Init()
+    public void Init(GameObject activeModel)
     {
         ship = Ship.Instance;
+
+        anim = activeModel.GetComponent<Animator>();
     }
 
     public void Interact()
@@ -33,6 +36,8 @@ public class PlayerInteraction : MonoBehaviour
         {
             Destroy(heldObject);
         }
+
+        anim.SetBool("IsHoldingInBothHands", false);
     }
 
     public void PickUp(GameObject pickedUpObject)
@@ -46,6 +51,8 @@ public class PlayerInteraction : MonoBehaviour
         Held = heldObject.GetComponent<Interactable>();
 
         Destroy(pickedUpObject);
+
+        anim.SetBool("IsHoldingInBothHands", true);
     }
 
     public void CutRope(Transform placeWithRope)

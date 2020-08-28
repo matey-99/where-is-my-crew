@@ -16,13 +16,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isGrounded = false;
 
     private Rigidbody rb = default;
+    private Animator anim = default;
 
-    public void Init()
+    public void Init(GameObject activeModel)
     {
         rb = GetComponent<Rigidbody>();
         rb.drag = 4f;
         rb.angularDrag = 999f;
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        anim = activeModel.GetComponent<Animator>();
     }
 
     public void Move(float vertical, float horizontal)
@@ -55,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * moveAmount * rotateSpeed);
+
+        HandleMovementAnimations();
     }
 
     private bool IsGrounded()
@@ -71,5 +76,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void HandleMovementAnimations()
+    {
+        anim.SetFloat("Vertical", moveAmount, 0.4f, Time.deltaTime);
     }
 }
