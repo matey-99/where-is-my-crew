@@ -22,3 +22,4 @@ public class Rope : Interactable
         this.placeForRope = placeForRope;
     }
 }
+
