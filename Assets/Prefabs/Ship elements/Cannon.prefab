@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 3822411577949474191}
   - component: {fileID: 3822411577949474178}
   - component: {fileID: 3822411577949474189}
-  - component: {fileID: 3822411577949474188}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3822411577949474188
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3822411577949474190}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3822411578715204651
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,8 +93,7 @@ GameObject:
   - component: {fileID: 3822411578715204652}
   - component: {fileID: 3822411578715204655}
   - component: {fileID: 3822411578715204654}
-  - component: {fileID: 3822411578715204649}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Whell (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -877,20 +862,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &3822411578715204649
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3822411578715204651}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &3822411578812998747
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +871,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3822411578812998744}
-  m_Layer: 0
+  - component: {fileID: 4275264602287839701}
+  - component: {fileID: 4932093614207564830}
+  m_Layer: 8
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -927,6 +900,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.596, y: 4.057, z: 8.339}
+--- !u!65 &4275264602287839701
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822411578812998747}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.2398958, y: 1.4413002, z: 1.4055914}
+  m_Center: {x: 0.6613632, y: 0.2206496, z: -0.006108642}
+--- !u!114 &4932093614207564830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822411578812998747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37fa75d5e0bdfac459a5e4e18eeec9c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactNotificationPrefab: {fileID: 6055196025690680006, guid: cd3cd75c99a76cd4d890c1fffe66f531, type: 3}
+  progressBarPrefab: {fileID: 0}
+  side: 0
 --- !u!1 &3822411578929566796
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,8 +940,7 @@ GameObject:
   - component: {fileID: 3822411578929566785}
   - component: {fileID: 3822411578929566784}
   - component: {fileID: 3822411578929566787}
-  - component: {fileID: 3822411578929566786}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Whell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1709,20 +1709,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &3822411578929566786
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3822411578929566796}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &3822411579432673650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,8 +1721,7 @@ GameObject:
   - component: {fileID: 3822411579432673655}
   - component: {fileID: 3822411579432673654}
   - component: {fileID: 3822411579432673649}
-  - component: {fileID: 3822411579432673648}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Whell (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2505,20 +2490,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &3822411579432673648
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3822411579432673650}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &3822411579712071387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,8 +2502,7 @@ GameObject:
   - component: {fileID: 3822411579712071388}
   - component: {fileID: 3822411579712071391}
   - component: {fileID: 3822411579712071390}
-  - component: {fileID: 3822411579712071385}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Whell (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3301,20 +3271,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &3822411579712071385
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3822411579712071387}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &3822411580067831398
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,8 +3283,7 @@ GameObject:
   - component: {fileID: 3822411580067831387}
   - component: {fileID: 3822411580067831386}
   - component: {fileID: 3822411580067831397}
-  - component: {fileID: 3822411580067831396}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4872,20 +4827,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &3822411580067831396
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3822411580067831398}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &4037572744558171764
 GameObject:
   m_ObjectHideFlags: 0
@@ -4898,8 +4839,7 @@ GameObject:
   - component: {fileID: 3898298166972447430}
   - component: {fileID: 4142557999669647995}
   - component: {fileID: 1543876732547829524}
-  - component: {fileID: 1133736349432288381}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5668,17 +5608,3 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &1133736349432288381
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4037572744558171764}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
