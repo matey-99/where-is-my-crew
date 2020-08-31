@@ -2265,9 +2265,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74031727eaeed1947a18e3a7cb9539c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactNotificationPrefab: {fileID: 6055196025690680006, guid: cd3cd75c99a76cd4d890c1fffe66f531, type: 3}
   neededHands: 2
-  offset: {x: 0, y: 1, z: 1.5}
+  offset: {x: 0.00215, y: -0.00359, z: 0.01197}
+  inHandRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!54 &2991901031039080982
 Rigidbody:
   m_ObjectHideFlags: 0

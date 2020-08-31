@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,43 +7,65 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
 
+    [System.Serializable]
+    private struct EnemyRespawnPoint
+    {
+        public Vector3 positionInWorld;
+        public Vector2 positionOnRadar;
+    }
+
     [Header("Init")]
     [SerializeField] private GameObject enemyPrefab = default;
-    [SerializeField] private GameObject navalBoardingProgressBarPrefab = default;
-    [SerializeField] private GameObject[] healthUIPrefab = default;
-    [SerializeField] private GameObject ropePrefab = default;
+    [SerializeField] private GameObject enemyOnRadarPrefab = default;
+
+    [SerializeField] private Transform enemyRespawnPointsTransform = default;
+    [SerializeField] private Transform radarTransform = default;
+    [SerializeField] private List<EnemyRespawnPoint> enemyRespawnPoints = new List<EnemyRespawnPoint>();
+    [SerializeField] private float minTimeBetweenEnemiesRespawn = 8f;
+    [SerializeField] private float maxTimeBetweenEnemiesRespawn = 25f;
 
     [Header("States")]
-    [SerializeField] private int enemies = 1;
-    [SerializeField] private Enemy enemyOnLeftSide = default;
-    [SerializeField] private Enemy enemyOnRightSide = default;
+    [SerializeField] private List<EnemyAI> enemies = new List<EnemyAI>();
+    [SerializeField] private List<EnemyRespawnPoint> freeEnemyRespawnPoints = new List<EnemyRespawnPoint>();
+    [SerializeField] private List<EnemyRespawnPoint> takenEnemyRespawnPoints = new List<EnemyRespawnPoint>();
 
     private void Awake()
     {
         if (!Instance)
             Instance = this;
+
+        freeEnemyRespawnPoints = enemyRespawnPoints;
+
+        StartCoroutine(RespawnEnemy(Random.Range(minTimeBetweenEnemiesRespawn, maxTimeBetweenEnemiesRespawn)));
     }
 
-    private void Update()
+    public IEnumerator RespawnEnemy(float time)
     {
-        if (enemies > 0)
-            RespawnEnemy();
-    }
+        yield return new WaitForSeconds(time);
 
-    public void RespawnEnemy()
-    {
-        if (!enemyOnLeftSide)
+        if (freeEnemyRespawnPoints.Count > 0)
         {
-            enemyOnLeftSide = Instantiate(enemyPrefab, transform, false).GetComponent<Enemy>();
-            enemyOnLeftSide.Init(navalBoardingProgressBarPrefab, healthUIPrefab, ropePrefab, 60);
-            enemies--;
-            return;
+            int index = Random.Range(0, freeEnemyRespawnPoints.Count);
+            EnemyRespawnPoint point = freeEnemyRespawnPoints[index];
+
+            EnemyAI enemy = Instantiate(enemyPrefab, enemyRespawnPointsTransform, false).GetComponent<EnemyAI>();
+            enemy.transform.localPosition = point.positionInWorld;
+
+            GameObject enemyOnRadar = Instantiate(enemyOnRadarPrefab, radarTransform, false);
+            enemyOnRadar.transform.localPosition = point.positionOnRadar;
+
+            enemies.Add(enemy);
+            enemy.Init();
+
+            freeEnemyRespawnPoints.Remove(point);
+            takenEnemyRespawnPoints.Add(point);
+
+            if (maxTimeBetweenEnemiesRespawn > minTimeBetweenEnemiesRespawn + 2)
+            {
+                maxTimeBetweenEnemiesRespawn--;
+            }
         }
 
-        if (!enemyOnRightSide)
-        {
-            enemyOnRightSide = Instantiate(enemyPrefab, transform, false).GetComponent<Enemy>();
-            enemies--;
-        }
+        StartCoroutine(RespawnEnemy(Random.Range(minTimeBetweenEnemiesRespawn, maxTimeBetweenEnemiesRespawn)));
     }
 }

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    private Enemy enemy = default;
+    private EnemyAI enemy = default;
     private Image mask = default;
     private float time = 0f;
     private float current = 0f;
 
-    public void Init(Enemy enemy, float time)
+    public void Init(EnemyAI enemy, float time)
     {
         this.time = time;
         this.enemy = enemy;
@@ -22,8 +22,7 @@ public class ProgressBar : MonoBehaviour
     {
         if (current < time)
         {
-            float timeMultiplier = enemy.GetAmountOfRopes();
-            current += Time.deltaTime * timeMultiplier;
+            current += Time.deltaTime * 0;
             FillBar();
         }
     }

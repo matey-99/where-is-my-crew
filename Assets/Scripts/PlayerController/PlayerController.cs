@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Init")]
-    [SerializeField] private GameObject activeModel = default;
+    public Transform RightHand { get => rightHand; }
+    public Interactable HeldObject { get => heldObject; }
+    public enum HandsInUsing { none, one, both }
 
-    private PlayerMovement playerStateManager = default;
-    private PlayerInteraction playerInteraction = default;
+    [Header("Initialization")]
+    [SerializeField] private GameObject activeModel = default;
+    [SerializeField] private Transform rightHand = default;
+    [SerializeField] private LayerMask interactableLayer = default; // player can interact with objects with that layer mask
+    [SerializeField] private float distanceToInteract = 3f; // minimal distance from player to object to interact
+
+    [Space]
+    [Header("Statistics")]
+    [SerializeField] private Interactable interactableObject = default; // the object the player is looking at
+    [SerializeField] private ToHold heldObject = default; // the object the player is holding
+    [SerializeField] private HandsInUsing hands = HandsInUsing.none;
+
+    private Player player = default;
+    private PlayerMovement playerMovement = default;
+    private Animator anim = default;
     private float vertical = 0f;
     private float horizontal = 0f;
     private bool interactInput = false;
@@ -16,32 +30,66 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        playerStateManager = GetComponent<PlayerMovement>();
-        playerStateManager.Init(activeModel);
+        player = GetComponent<Player>();
+        player.Init();
 
-        playerInteraction = GetComponent<PlayerInteraction>();
-        playerInteraction.Init(activeModel);
+        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement.Init(activeModel);
+
+        anim = activeModel.GetComponent<Animator>();
     }
 
     private void Update()
     {
-        playerInteraction.LookForInteractableObjects();
-
         GetInput();
 
-        if (interactInput)
-        {
-            playerInteraction.Interact();
-        }
-        if (dropInput)
-        {
-            playerInteraction.Drop();
-        }
+        Interacting();
     }
 
     private void FixedUpdate()
     {
-        playerStateManager.Move(vertical, horizontal);
+        playerMovement.Move(vertical, horizontal);
+    }
+
+    public void PickUp(ToHold pickedUpObject, HandsInUsing neededHands)
+    {
+        heldObject = pickedUpObject;
+
+        HandleHandsAnimations(neededHands);
+    }
+
+    public void LoadCannon()
+    {
+        Destroy(heldObject.gameObject);
+
+        HandleHandsAnimations(HandsInUsing.none);
+    }
+
+    public void FireFuse()
+    {
+        anim.SetTrigger("Attack");
+    }
+
+    private void Interacting()
+    {
+        interactableObject = GetNearest<Interactable>(distanceToInteract, interactableLayer);
+        if (interactableObject && interactInput)
+        {
+            interactableObject.Interact(this);
+        }
+
+        if (heldObject && dropInput)
+        {
+            Drop();
+        }
+    }
+
+    private void Drop()
+    {
+        heldObject.Drop();
+        heldObject = null;
+
+        HandleHandsAnimations(HandsInUsing.none);
     }
 
     private void GetInput()
@@ -51,5 +99,52 @@ public class PlayerController : MonoBehaviour
 
         interactInput = Input.GetButtonDown("Interact");
         dropInput = Input.GetButtonDown("Drop");
+    }
+
+    private T GetNearest<T>(float radius, LayerMask searchedLayer)
+    {
+        T nearestObject = default;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, searchedLayer);
+
+        float minDistance = Mathf.Infinity;
+
+        foreach (Collider hitCollider in hitColliders)
+        {
+            float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestObject = hitCollider.GetComponent<T>();
+            }
+        }
+
+        return nearestObject;
+    }
+
+    private void HandleHandsAnimations(HandsInUsing hands)
+    {
+        switch (this.hands)
+        {
+            case HandsInUsing.one:
+                anim.SetBool("IsHoldingInOneHand", false);
+                break;
+
+            case HandsInUsing.both:
+                anim.SetBool("IsHoldingInBothHands", false);
+                break;
+        }
+
+        switch (hands)
+        {
+            case HandsInUsing.one:
+                anim.SetBool("IsHoldingInOneHand", true);
+                break;
+
+            case HandsInUsing.both:
+                anim.SetBool("IsHoldingInBothHands", true);
+                break;
+        }
+
+        this.hands = hands;
     }
 }

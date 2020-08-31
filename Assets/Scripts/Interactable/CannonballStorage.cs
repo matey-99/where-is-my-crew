@@ -7,18 +7,20 @@ public class CannonballStorage : Interactable
     [SerializeField] private GameObject cannonballPrefab = default;
 
 
-    public override void Interact(PlayerInteraction player)
+    public override void Interact(PlayerController player)
     {
         base.Interact(player);
 
-        CreateCannonball(player);
+        if (!player.HeldObject)
+        {
+            CreateCannonball(player);
+        }
     }
 
-    private void CreateCannonball(PlayerInteraction player)
+    private void CreateCannonball(PlayerController player)
     {
         ToHold cannonball = Instantiate(cannonballPrefab, player.transform, false).GetComponent<Cannonball>();
 
-        cannonball.PickUp(player);
-        player.PickUp(cannonball, PlayerInteraction.HandsInUsing.both);
+        cannonball.PickUp(player, player.RightHand);
     }
 }

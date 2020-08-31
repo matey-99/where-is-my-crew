@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ToHold : Interactable
 {
-    [SerializeField] private PlayerInteraction.HandsInUsing neededHands = default;
+    [SerializeField] private PlayerController.HandsInUsing neededHands = default;
     [SerializeField] private Vector3 offset = Vector3.zero;
-
+    [SerializeField] private Quaternion inHandRotation = Quaternion.identity;
 
     private Rigidbody rb = default;
+
 
     private void Awake()
     {
@@ -16,30 +17,35 @@ public class ToHold : Interactable
         rb.isKinematic = true;
     }
 
-    public override void Interact(PlayerInteraction player)
+    public override void Interact(PlayerController player)
     {
-        if (CanInteract)
-        {
-            base.Interact(player);
+        base.Interact(player);
 
-            PickUp(player);
+        PickUp(player, player.RightHand);
+    }
+
+    public virtual void PickUp(PlayerController player, Transform playerHand)
+    {
+        if (!player.HeldObject)
+        {
+            transform.parent = playerHand.transform;
+            transform.localPosition = offset;
+            transform.localRotation = inHandRotation;
+
+            rb.isKinematic = true;
+
+            gameObject.layer = LayerMask.NameToLayer("Held");
+
             player.PickUp(this, neededHands);
         }
     }
 
-    public void PickUp(PlayerInteraction player)
-    {
-        transform.parent = player.transform;
-        transform.localPosition = offset;
-
-        rb.isKinematic = true;
-        CanInteract = false;
-    }
-
     public void Drop()
     {
+        transform.parent = null;
         rb.isKinematic = false;
-        CanInteract = true;
+
+        gameObject.layer = LayerMask.NameToLayer("Interactable");
     }
 }
     

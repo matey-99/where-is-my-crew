@@ -4,20 +4,35 @@ using UnityEngine;
 
 public class Cannon : Interactable
 {
+    [SerializeField] private GameObject cannonballPrefab = default;
+    [SerializeField] private Transform cannonBarrel = default;
+    [SerializeField] private List<AudioClip> audioClips = new List<AudioClip>(); // first must be fire fusing sound, second cannon shooting
+    private AudioSource source = default;
+
     private bool isLoaded = false;
 
-    public override void Interact(PlayerInteraction player)
+    private void Awake()
+    {
+        source = GetComponent<AudioSource>();
+    }
+
+    public override void Interact(PlayerController player)
     {
         base.Interact(player);
 
         if (isLoaded && player.HeldObject is Torch)
         {
+            player.FireFuse();
+            source.clip = audioClips[0];
+            source.Play();
+
             StartCoroutine(Shoot());
         }
         else if (!isLoaded && player.HeldObject is Cannonball)
         {
             LoadAmmo();
-            player.DestroyHeldObject();
+
+            player.LoadCannon();
         }
     }
 
@@ -30,8 +45,19 @@ public class Cannon : Interactable
     {
         isLoaded = false;
         yield return new WaitForSeconds(4);
-        //Play animation, throw ball and delete one life of enemy ship
 
-        Debug.Log("shoot!");
+        source.clip = audioClips[1];
+        source.Play();
+
+        GameObject cannonball = Instantiate(cannonballPrefab, cannonBarrel.position, Quaternion.identity);
+
+        cannonball.GetComponent<Rigidbody>().AddForce(transform.right * 50, ForceMode.Impulse);
+        StartCoroutine(CannonballDisappearance(cannonball));
+    }
+
+    private IEnumerator CannonballDisappearance(GameObject cannonball)
+    {
+        yield return new WaitForSeconds(10);
+        Destroy(cannonball);
     }
 }
