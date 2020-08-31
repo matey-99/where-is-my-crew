@@ -26,7 +26,7 @@ public class Cannon : Interactable
             source.clip = audioClips[0];
             source.Play();
 
-            StartCoroutine(Shoot());
+            StartCoroutine(Shoot(player.PlayerStats));
         }
         else if (!isLoaded && player.HeldObject is Cannonball)
         {
@@ -41,7 +41,7 @@ public class Cannon : Interactable
         isLoaded = true;
     }
 
-    private IEnumerator Shoot()
+    private IEnumerator Shoot(Player player)
     {
         isLoaded = false;
         yield return new WaitForSeconds(4);
@@ -50,6 +50,7 @@ public class Cannon : Interactable
         source.Play();
 
         GameObject cannonball = Instantiate(cannonballPrefab, cannonBarrel.position, Quaternion.identity);
+        cannonball.GetComponent<CannonballShoot>().Init(player);
 
         cannonball.GetComponent<Rigidbody>().AddForce(transform.right * 50, ForceMode.Impulse);
         StartCoroutine(CannonballDisappearance(cannonball));
@@ -58,6 +59,10 @@ public class Cannon : Interactable
     private IEnumerator CannonballDisappearance(GameObject cannonball)
     {
         yield return new WaitForSeconds(10);
-        Destroy(cannonball);
+
+        if (cannonball)
+        {
+            Destroy(cannonball);
+        }
     }
 }

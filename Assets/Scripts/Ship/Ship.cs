@@ -5,8 +5,12 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     public static Ship Instance { get; private set; }
+    public Character Owner { get => owner; }
+    public Collider MeshCollider { get => meshCollider; }
     public List<Transform> PlacesForRope { get => placesForRope; }
 
+    [SerializeField] private Character owner = default;
+    [SerializeField] private Collider meshCollider = default;
     [SerializeField] private List<Transform> placesForRope = new List<Transform>();
     [SerializeField] private List<Transform> takenPlacesForRope = new List<Transform>();
 

@@ -7,13 +7,6 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
 
-    [System.Serializable]
-    private struct EnemyRespawnPoint
-    {
-        public Vector3 positionInWorld;
-        public Vector2 positionOnRadar;
-    }
-
     [Header("Init")]
     [SerializeField] private GameObject enemyPrefab = default;
     [SerializeField] private GameObject enemyOnRadarPrefab = default;
@@ -48,14 +41,14 @@ public class EnemyManager : MonoBehaviour
             int index = Random.Range(0, freeEnemyRespawnPoints.Count);
             EnemyRespawnPoint point = freeEnemyRespawnPoints[index];
 
-            EnemyAI enemy = Instantiate(enemyPrefab, enemyRespawnPointsTransform, false).GetComponent<EnemyAI>();
-            enemy.transform.localPosition = point.positionInWorld;
+            EnemyAI enemyAI = Instantiate(enemyPrefab, enemyRespawnPointsTransform, false).GetComponent<EnemyAI>();
+            enemyAI.transform.localPosition = point.positionInWorld;
 
             GameObject enemyOnRadar = Instantiate(enemyOnRadarPrefab, radarTransform, false);
             enemyOnRadar.transform.localPosition = point.positionOnRadar;
 
-            enemies.Add(enemy);
-            enemy.Init();
+            enemies.Add(enemyAI);
+            enemyAI.Init(enemyOnRadar, point);
 
             freeEnemyRespawnPoints.Remove(point);
             takenEnemyRespawnPoints.Add(point);
@@ -68,4 +61,17 @@ public class EnemyManager : MonoBehaviour
 
         StartCoroutine(RespawnEnemy(Random.Range(minTimeBetweenEnemiesRespawn, maxTimeBetweenEnemiesRespawn)));
     }
+
+    public void DeathOfEnemy(Enemy enemy, EnemyRespawnPoint respawnPoint)
+    {
+        takenEnemyRespawnPoints.Remove(respawnPoint);
+        freeEnemyRespawnPoints.Add(respawnPoint);
+    }
+}
+
+[System.Serializable]
+public struct EnemyRespawnPoint
+{
+    public Vector3 positionInWorld;
+    public Vector2 positionOnRadar;
 }

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static GameManager Instance { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    [Header("Balance")]
+    [SerializeField] [Range(0, 1)] private float playerDamage = 0.2f;
+    [SerializeField] [Range(0, 1)] private float enemyDamage = 0.1f;
+
+    private void Awake()
     {
-        
+        if (!Instance)
+        {
+            Instance = this;
+        }
     }
 }

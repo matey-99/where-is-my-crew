@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Player PlayerStats { get => player; }
     public Transform RightHand { get => rightHand; }
     public Interactable HeldObject { get => heldObject; }
     public enum HandsInUsing { none, one, both }

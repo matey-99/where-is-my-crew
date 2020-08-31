@@ -5,19 +5,28 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     public float Health { get => health; }
+    public float Damage { get => damage; }
 
-    [Header("Init")]
-    [SerializeField] private GameObject healthBarPrefab = default;
-    [SerializeField] private GameObject hud = default;
-
-    [Header("Stats")]
     [SerializeField] [Range(0, 1)] private float health = 1;
+    [SerializeField] [Range(0, 1)] private float damage = 0.1f;
 
-    private HealthBar healthBar = default;
-
-    public void Init()
+    private void Update()
     {
-        healthBar = Instantiate(healthBarPrefab, hud.transform, false).GetComponent<HealthBar>();
-        healthBar.Init(this);
+        if (health <= 0)
+        {
+            Death();
+        }
     }
+
+    public void DealDamage(float damage)
+    {
+        health -= damage;
+    }
+
+    public virtual void Death()
+    {
+
+    }
+
+    
 }
