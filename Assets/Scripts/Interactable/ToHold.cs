@@ -11,8 +11,10 @@ public class ToHold : Interactable
     private Rigidbody rb = default;
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
     }

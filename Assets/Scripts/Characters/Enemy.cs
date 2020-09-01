@@ -5,20 +5,24 @@ using UnityEngine;
 public class Enemy : Character
 {
     private GameObject enemyOnRadar = default;
-    private EnemyRespawnPoint respawnPoint = default;
 
-    public void Init(GameObject enemyOnRadar, EnemyRespawnPoint respawnPoint)
+    public void Init(GameObject enemyOnRadar)
     {
         this.enemyOnRadar = enemyOnRadar;
-        this.respawnPoint = respawnPoint;
     }
 
     public override void Death()
     {
         base.Death();
 
-        EnemyManager.Instance.DeathOfEnemy(this, respawnPoint);
+        DeathOfEnemy();
+
         Destroy(enemyOnRadar);
         Destroy(gameObject);
+    }
+
+    protected virtual void DeathOfEnemy()
+    {
+
     }
 }

@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class Boss : Enemy
 {
-    [Header("Init")]
-    [SerializeField] private GameObject healthBarPrefab = default;
-    [SerializeField] private GameObject progressBarPrefab = default;
-    [SerializeField] private GameObject hud = default;
-
     private HealthBar healthBar = default;
+    private ProgressBar progressBar = default;
 
-    public void Init()
+    private BossRespawnPoint respawnPoint = default;
+
+    public void Init(GameObject bossOnRadar, HealthBar healthBar, ProgressBar progressBar, BossRespawnPoint respawnPoint, float timeToCompleteNavalBoarding)
     {
-        healthBar = Instantiate(healthBarPrefab, hud.transform, false).GetComponent<HealthBar>();
-        healthBar.Init(this);
+        Init(bossOnRadar);
+
+        this.healthBar = healthBar;
+        this.healthBar.Init(this);
+
+        this.progressBar = progressBar;
+        this.progressBar.Init(this, timeToCompleteNavalBoarding);
+
+        this.respawnPoint = respawnPoint;
+    }
+
+    protected override void DeathOfEnemy()
+    {
+        base.DeathOfEnemy();
+
+        EnemyManager.Instance.DeathOfBoss(this, respawnPoint);
+
+        Destroy(healthBar.gameObject);
+        Destroy(progressBar.gameObject);
     }
 }

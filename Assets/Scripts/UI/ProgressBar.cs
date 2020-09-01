@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    private EnemyAI enemy = default;
-    private Image mask = default;
+    private Boss boss = default;
+    private Image fill = default;
     private float time = 0f;
     private float current = 0f;
 
-    public void Init(EnemyAI enemy, float time)
+    public void Init(Boss boss, float time)
     {
         this.time = time;
-        this.enemy = enemy;
+        this.boss = boss;
 
-        mask = GetComponentsInChildren<Image>()[1];
+        fill = GetComponentInChildren<Image>();
     }
 
     private void Update()
@@ -29,6 +29,6 @@ public class ProgressBar : MonoBehaviour
 
     private void FillBar()
     {
-        mask.fillAmount = current / time;
+        fill.fillAmount = current / time;
     }
 }

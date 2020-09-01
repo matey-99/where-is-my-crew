@@ -1,6 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2929576313209748813
+--- !u!114 &8100676811062537085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185884451995245841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac56611fb8abd84394e7d7b20d28ef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &2442138751233886794
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -85,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 996053385148815192, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -120
+      value: -163
       objectReference: {fileID: 0}
     - target: {fileID: 996053385148815192, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -121,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 996053385148815195, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
       propertyPath: m_Name
-      value: Enemy Health Bar
+      value: Enemy Progress Bar
       objectReference: {fileID: 0}
     - target: {fileID: 996053385293814804, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
       propertyPath: m_AnchorMin.x
@@ -148,8 +160,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 996053385293814805, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a6139fe84d488b84b8f02a384161abf1, type: 3}
+    - target: {fileID: 996053385293814805, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
       propertyPath: m_FillAmount
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 996053385148815193, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
+--- !u!1 &3185884451995245841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 996053385148815195, guid: 2d65636f5d473e44bb22167ea72aebe9, type: 3}
+  m_PrefabInstance: {fileID: 2442138751233886794}
+  m_PrefabAsset: {fileID: 0}

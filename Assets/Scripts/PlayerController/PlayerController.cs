@@ -73,10 +73,31 @@ public class PlayerController : MonoBehaviour
 
     private void Interacting()
     {
-        interactableObject = GetNearest<Interactable>(distanceToInteract, interactableLayer);
-        if (interactableObject && interactInput)
+        Interactable interactable = GetNearest<Interactable>(distanceToInteract, interactableLayer);
+
+        if (interactable)
         {
-            interactableObject.Interact(this);
+            if (interactableObject)
+            {
+                interactableObject.NoInteraction();
+                interactableObject = null;
+            }
+
+            interactable.ToInteraction();
+            interactableObject = interactable;
+
+            if (interactInput)
+            {
+                interactableObject.Interact(this);
+            }
+        }
+        else
+        {
+            if (interactableObject)
+            {
+                interactableObject.NoInteraction();
+                interactableObject = null;
+            }
         }
 
         if (heldObject && dropInput)

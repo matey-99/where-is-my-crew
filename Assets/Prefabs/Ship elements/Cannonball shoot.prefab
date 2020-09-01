@@ -71,8 +71,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cannonball shoot
       objectReference: {fileID: 0}
+    - target: {fileID: 8515251632174227038, guid: 016c0b26ae92f0a4281d84dab6922d15, type: 3}
+      propertyPath: highlightColor.r
+      value: 0.38679248
+      objectReference: {fileID: 0}
+    - target: {fileID: 8515251632174227038, guid: 016c0b26ae92f0a4281d84dab6922d15, type: 3}
+      propertyPath: highlightColor.g
+      value: 0.38679248
+      objectReference: {fileID: 0}
+    - target: {fileID: 8515251632174227038, guid: 016c0b26ae92f0a4281d84dab6922d15, type: 3}
+      propertyPath: highlightColor.b
+      value: 0.38679248
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5782440839640024383, guid: 016c0b26ae92f0a4281d84dab6922d15, type: 3}
+    - {fileID: 8515251632174227038, guid: 016c0b26ae92f0a4281d84dab6922d15, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 016c0b26ae92f0a4281d84dab6922d15, type: 3}
 --- !u!1 &8873111628105749549 stripped
 GameObject:

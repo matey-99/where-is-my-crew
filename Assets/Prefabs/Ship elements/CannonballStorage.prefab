@@ -49288,7 +49288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc4e153a5ec6f34b9c1599a678ad3b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactNotificationPrefab: {fileID: 6055196025690680006, guid: cd3cd75c99a76cd4d890c1fffe66f531, type: 3}
   cannonballPrefab: {fileID: 2364971372537486119, guid: 016c0b26ae92f0a4281d84dab6922d15, type: 3}
 --- !u!65 &6237513663693992747
 BoxCollider:

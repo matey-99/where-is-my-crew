@@ -10,15 +10,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float minTimeBetweenCannonShooting = 6f;
     [SerializeField] private float maxTimeBetweenCannonShooting = 10f;
 
-    private AudioSource source = default;
     private Enemy enemy = default;
+    private AudioSource source = default;
     private Ship playerShip = default;
 
-    public virtual void Init(GameObject enemyOnRadar, EnemyRespawnPoint point)
+    protected void Init()
     {
-        source = GetComponent<AudioSource>();
         enemy = GetComponent<Enemy>();
-        enemy.Init(enemyOnRadar, point);
+        source = GetComponent<AudioSource>();
         playerShip = Ship.Instance;
 
         StartCoroutine(CannonShoot(Random.Range(minTimeBetweenCannonShooting, maxTimeBetweenCannonShooting)));

@@ -11,8 +11,10 @@ public class Cannon : Interactable
 
     private bool isLoaded = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         source = GetComponent<AudioSource>();
     }
 
