@@ -17,6 +17,8 @@ public class Enemy : Character
 
         DeathOfEnemy();
 
+        GameManager.Instance.AddPoint();
+
         Destroy(enemyOnRadar);
         Destroy(gameObject);
     }

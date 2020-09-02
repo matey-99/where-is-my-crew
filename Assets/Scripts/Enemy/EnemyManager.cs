@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -62,18 +64,27 @@ public class EnemyManager : MonoBehaviour
             enemiesInThisWave = 0;
             isBossRespawned = false;
         }
+
+        ClearLists();
     }
 
-    public void DeathOfEnemy(Enemy enemy, EnemyRespawnPoint respawnPoint)
+    public void DeathOfEnemy(EnemyRespawnPoint respawnPoint)
     {
         takenEnemyRespawnPoints.Remove(respawnPoint);
         freeEnemyRespawnPoints.Add(respawnPoint);
     }
 
-    public void DeathOfBoss(Boss boss, BossRespawnPoint respawnPoint)
+    public void DeathOfBoss(BossRespawnPoint respawnPoint)
     {
         takenBossRespawnPoints.Remove(respawnPoint);
         freeBossRespawnPoints.Add(respawnPoint);
+    }
+
+    // this method deleting "Missing" objects of list
+    public void ClearLists()
+    {
+        enemies = enemies.Where(enemy => enemy != null).ToList();
+        bosses = bosses.Where(boss => boss != null).ToList();
     }
 
     private IEnumerator RespawnEnemy(float time)
@@ -149,6 +160,7 @@ public struct EnemyRespawnPoint
 [System.Serializable]
 public struct BossRespawnPoint
 {
+    public Ship.Side side;
     public Vector3 positionInWorld;
     public Vector2 positionOnRadar;
     public Vector2 positionOnHUD; // position of health and progress bar

@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
+    protected Ship PlayerShip { get => playerShip; }
+
     [SerializeField] private GameObject cannonballPrefab = default;
-   
     [SerializeField] private float minTimeBetweenCannonShooting = 6f;
     [SerializeField] private float maxTimeBetweenCannonShooting = 10f;
 

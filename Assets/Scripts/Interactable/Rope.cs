@@ -4,20 +4,35 @@ using UnityEngine;
 
 public class Rope : Interactable
 {
-    private EnemyAI enemy = default;
+    private BossAI owner = default;
     private Transform placeForRope = default;
+    private Ship ship = default;
 
     public override void Interact(PlayerController player)
     {
         base.Interact(player);
 
-        Destroy(gameObject);
+        if (!player.HeldObject)
+        {
+            Cut();
+            player.CutRope();
+        }
     }
 
-    public void Init(EnemyAI enemy, Transform placeForRope)
+    public void Init(BossAI owner, Transform placeForRope)
     {
-        this.enemy = enemy;
+        this.owner = owner;
         this.placeForRope = placeForRope;
+
+        ship = Ship.Instance;
+    }
+
+    private void Cut()
+    {
+        owner.RollUpRope(this);
+        ship.FreeUpPlaceForRope(owner.Side, placeForRope);
+
+        Destroy(gameObject);
     }
 }
 

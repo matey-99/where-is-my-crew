@@ -22,11 +22,21 @@ public class Boss : Enemy
         this.respawnPoint = respawnPoint;
     }
 
+    public void CalculateNavalBoardingProgressBar(int amountOfRopes)
+    {
+        progressBar.SetMultiplier(amountOfRopes);
+    }
+
+    public void NavalBoardingCompleted()
+    {
+
+    }
+
     protected override void DeathOfEnemy()
     {
         base.DeathOfEnemy();
 
-        EnemyManager.Instance.DeathOfBoss(this, respawnPoint);
+        EnemyManager.Instance.DeathOfBoss(respawnPoint);
 
         Destroy(healthBar.gameObject);
         Destroy(progressBar.gameObject);

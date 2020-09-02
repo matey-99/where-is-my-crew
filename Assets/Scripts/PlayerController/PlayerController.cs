@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Initialization")]
     [SerializeField] private GameObject activeModel = default;
     [SerializeField] private Transform rightHand = default;
+    [SerializeField] private GameObject sword = default;
     [SerializeField] private LayerMask interactableLayer = default; // player can interact with objects with that layer mask
     [SerializeField] private float distanceToInteract = 3f; // minimal distance from player to object to interact
 
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour
     private Player player = default;
     private PlayerMovement playerMovement = default;
     private Animator anim = default;
+    private AnimationEventsController animEventsController = default;
+    private AudioSource source = default;
     private float vertical = 0f;
     private float horizontal = 0f;
     private bool interactInput = false;
@@ -38,6 +41,11 @@ public class PlayerController : MonoBehaviour
         playerMovement.Init(activeModel);
 
         anim = activeModel.GetComponent<Animator>();
+
+        animEventsController = activeModel.GetComponent<AnimationEventsController>();
+        animEventsController.Init(sword);
+
+        source = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -68,7 +76,13 @@ public class PlayerController : MonoBehaviour
 
     public void FireFuse()
     {
-        anim.SetTrigger("Attack");
+        anim.SetTrigger("FireFuse");
+    }
+
+    public void CutRope()
+    {
+        anim.SetTrigger("CutRope");
+        source.Play();
     }
 
     private void Interacting()

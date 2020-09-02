@@ -17,6 +17,6 @@ public class NormalEnemy : Enemy
     {
         base.DeathOfEnemy();
 
-        EnemyManager.Instance.DeathOfEnemy(this, respawnPoint);
+        EnemyManager.Instance.DeathOfEnemy(respawnPoint);
     }
 }
