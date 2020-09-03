@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private Text pointsText = default;
+    [SerializeField] private AudioMixer audioMixer = default;
 
-    [SerializeField] private int points = 0;
+    [SerializeField] private GameObject losePanelPrefab = default;
+    [SerializeField] private GameObject menuInPausePrefab = default;
     [SerializeField] private bool isPaused = false;
 
-    private bool pauseInput = false;
+    private GameObject menuInPause = default;
+    private bool isLost = default;
+    private bool isInGameScene = false;
+    private bool isPauseInputClicked = false;
 
     private void Awake()
     {
@@ -20,46 +25,108 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
         GetInput();
 
-        if (pauseInput)
+        if (isInGameScene && !isLost)
         {
-            if (isPaused)
+            if (isPauseInputClicked)
             {
-                Resume();
+                if (isPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
             }
-            else
-            {
-                Pause();
-            }
-            
         }
     }
 
-    public void AddPoint()
+    public void Lose()
     {
-        points++;
-        pointsText.text = points.ToString();
+        Instantiate(losePanelPrefab, FindObjectOfType<Canvas>().transform, false);
+        Time.timeScale = 0;
+        isLost = true;
     }
 
-    private void Resume()
+    public void SetMasterVolume(float volume)
+    {
+        audioMixer.SetFloat("masterVolume", volume);
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        audioMixer.SetFloat("musicVolume", volume);
+    }
+
+    public void SetSoundsVolume(float volume)
+    {
+        audioMixer.SetFloat("soundsVolume", volume);
+    }
+
+    public float GetMasterVolume()
+    {
+        float volume;
+        audioMixer.GetFloat("masterVolume", out volume);
+
+        return volume;
+    }
+
+    public float GetMusicVolume()
+    {
+        float volume;
+        audioMixer.GetFloat("musicVolume", out volume);
+
+        return volume;
+    }
+
+    public float GetSoundsVolume()
+    {
+        float volume;
+        audioMixer.GetFloat("soundsVolume", out volume);
+
+        return volume;
+    }
+
+    public void InGameScene(bool status)
+    {
+        isInGameScene = status;
+    }
+
+    public void Resume()
     {
         Time.timeScale = 1;
         isPaused = false;
+
+        if (menuInPause)
+        {
+            Destroy(menuInPause);
+        }
     }
 
-    private void Pause()
+    public void Pause()
     {
         Time.timeScale = 0;
         isPaused = true;
+
+        menuInPause = Instantiate(menuInPausePrefab, FindObjectOfType<Canvas>().transform, false);
+    }
+
+    public void ResetOnLoad()
+    {
+        isLost = false;
+        isPaused = false;
     }
 
     private void GetInput()
     {
-        pauseInput = Input.GetButtonDown("Cancel");
+        isPauseInputClicked = Input.GetButtonDown("Cancel");
     }
 }

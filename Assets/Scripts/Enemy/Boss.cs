@@ -29,7 +29,7 @@ public class Boss : Enemy
 
     public void NavalBoardingCompleted()
     {
-
+        GameManager.Instance.Lose();
     }
 
     protected override void DeathOfEnemy()

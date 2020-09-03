@@ -10,6 +10,7 @@ public class Cannon : Interactable
     private AudioSource source = default;
 
     private bool isLoaded = false;
+    private bool isFuseOnFire = false;
 
     protected override void Awake()
     {
@@ -22,7 +23,7 @@ public class Cannon : Interactable
     {
         base.Interact(player);
 
-        if (isLoaded && player.HeldObject is Torch)
+        if (isLoaded && !isFuseOnFire && player.HeldObject is Torch)
         {
             player.FireFuse();
             source.clip = audioClips[0];
@@ -30,22 +31,27 @@ public class Cannon : Interactable
 
             StartCoroutine(Shoot(player.PlayerStats));
         }
-        else if (!isLoaded && player.HeldObject is Cannonball)
+        else if (!isLoaded && !isFuseOnFire && player.HeldObject is Cannonball)
         {
-            LoadAmmo();
+            Load();
 
             player.LoadCannon();
         }
     }
 
-    private void LoadAmmo()
+    private void Load()
     {
         isLoaded = true;
     }
 
-    private IEnumerator Shoot(Player player)
+    private void Unload()
     {
         isLoaded = false;
+    }
+
+    private IEnumerator Shoot(Player player)
+    {
+        isFuseOnFire = true;
         yield return new WaitForSeconds(4);
 
         source.clip = audioClips[1];
@@ -56,6 +62,9 @@ public class Cannon : Interactable
 
         cannonball.GetComponent<Rigidbody>().AddForce(transform.right * 50, ForceMode.Impulse);
         StartCoroutine(CannonballDisappearance(cannonball));
+
+        Unload();
+        isFuseOnFire = false;
     }
 
     private IEnumerator CannonballDisappearance(GameObject cannonball)

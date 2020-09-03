@@ -39,6 +39,7 @@ public class ProgressBar : MonoBehaviour
             else
             {
                 boss.NavalBoardingCompleted();
+                current = 0;
             }
         }
         current = Mathf.Clamp(current, 0, time);
