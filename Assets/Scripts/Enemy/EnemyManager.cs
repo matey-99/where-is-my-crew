@@ -19,6 +19,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Transform enemyRespawnPointsTransform = default;
     [SerializeField] private Transform hudTransform = default;
     [SerializeField] private Transform radarTransform = default;
+    [SerializeField] private Vector2 progressBarOffset = new Vector2(0, 90);
     [SerializeField] private List<EnemyRespawnPoint> enemyRespawnPoints = new List<EnemyRespawnPoint>();
     [SerializeField] private List<BossRespawnPoint> bossRespawnPoints = new List<BossRespawnPoint>();
     [SerializeField] private float enemiesInWave = 8f;
@@ -136,7 +137,7 @@ public class EnemyManager : MonoBehaviour
         bossHealthBar.transform.localPosition = point.positionOnHUD;
 
         ProgressBar bossProgressBar = Instantiate(progressBarPrefab, hudTransform, false).GetComponent<ProgressBar>();
-        bossProgressBar.transform.localPosition = point.positionOnHUD - new Vector2(0, 45);
+        bossProgressBar.transform.localPosition = point.positionOnHUD - progressBarOffset;
 
         bosses.Add(bossAI);
         bossAI.Init(bossOnRadar, bossHealthBar, bossProgressBar, point);

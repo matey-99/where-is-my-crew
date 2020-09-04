@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     {
         GetInput();
 
+        CursorVisible();
+
         if (isInGameScene && !isLost)
         {
             if (isPauseInputClicked)
@@ -123,6 +125,25 @@ public class GameManager : MonoBehaviour
     {
         isLost = false;
         isPaused = false;
+    }
+
+    private void CursorVisible()
+    {
+        if (isInGameScene)
+        {
+            if (isPaused || isLost)
+            {
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.visible = false;
+            }
+        }
+        else
+        {
+            Cursor.visible = true;
+        }
     }
 
     private void GetInput()

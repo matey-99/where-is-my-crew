@@ -28,7 +28,7 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        GameObject cannonball = Instantiate(cannonballPrefab, transform, false);
+        GameObject cannonball = Instantiate(cannonballPrefab, transform.position, Quaternion.identity, null);
         Vector3 cannonballDestination = (playerShip.transform.position - transform.position).normalized;
         cannonball.GetComponent<Rigidbody>().AddForce(cannonballDestination * 50, ForceMode.Impulse);
         cannonball.GetComponent<CannonballShoot>().Init(enemy);
