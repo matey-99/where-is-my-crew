@@ -1328,17 +1328,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Your objective is to get as many points as you can. You are getting points
-    by sinking enemy ships. Enemy ships are visible on radar in right down screen
-    corner. Your health is visible in left down screen corner. Except you, only bosses
-    have health bar. Additionaly, they have progress of naval boarding bar. If this
-    progress bar will be fullfiled, you will lose. Prevent it by cutting ropes.
+    by sinking enemy ships. Enemy ships are visible on radar which is in bottom right
+    part of the screen. Your health is visible in bottom left part of screen. Except
+    you, only bosses have health bar. Additionaly, they have progress of naval boarding
+    bar.You lose if the progress bar is full. Prevent it by cutting ropes.
 
 
     You
-    can interact with: torch, cannon, cannon storage, cannonball, ropes.
+    can interact with: torches, cannons, cannon storages, cannonballs, ropes.
 
     You
-    can fire the cannon only with cannonball loaded and if you are holding torch
+    can fire the cannon only with cannonball loaded and when you are holding torch
     in your hand.'
 --- !u!222 &1450288631
 CanvasRenderer:
